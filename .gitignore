@@ -1,0 +1,6 @@
+Settings.php
+Settings_bak.php
+cache/data*.php
+Packages/backups/*
+Packages/temp
+*.*~

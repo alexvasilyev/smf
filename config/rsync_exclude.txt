@@ -1,0 +1,24 @@
+# Project files
+/deploy.php
+/config/properties.ini
+/config/rsync_exclude.txt
+/cache/*
+/Settings.php
+/Settings_bak.php
+/install*
+/license.txt
+/news_readme.html
+/patch_to_mod.php
+/readme.html
+/ssi_*
+/Packages/backups
+/Packages/temp
+*.*~
+
+# SCM files
+.git
+.gitignore
+.gitmodules
+
+# IDE files
+.idea

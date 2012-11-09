@@ -4,3 +4,4 @@ cache/data*.php
 Packages/backups/*
 Packages/temp
 *.*~
+config/properties.ini

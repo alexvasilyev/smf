@@ -1,0 +1,13 @@
+[prod]
+  host=prod.url
+  port=
+  user=user
+  dir=/path/to/dir/on/server
+  key=/path/to/ssh-key.pem
+
+[dev]
+  host=dev.url
+  port=
+  user=user
+  dir=/path/to/dir/on/server
+  key=/path/to/ssh-key.pem

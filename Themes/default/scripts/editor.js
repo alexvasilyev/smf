@@ -686,6 +686,10 @@ smc_Editor.prototype.handleButtonClick = function (oButtonProperties)
 	if (oButtonProperties.sCode in this.oSmfExec)
 		this[this.oSmfExec[oButtonProperties.sCode]]();
 
+        // Is it Phereo embed?
+        else if ('phereo' == oButtonProperties.sCode) {
+            this.insertPhereoEmbed();
+        }
 	else
 	{
 		// In text this is easy...
@@ -850,6 +854,29 @@ smc_Editor.prototype.insertImage = function(sSrc)
 			return;
 	}
 	this.smf_execCommand('insertimage', false, sSrc);
+}
+
+smc_Editor.prototype.insertPhereoEmbed = function()
+{
+    var imgUrl, matches;
+    var pattern = /^(https?:\/\/)?phereo.com\/image\/([a-z0-9]{24,24})\/?$/i;
+    imgUrl = prompt(oEditorStrings['prompt_text_phereo'], '');
+    if (!imgUrl) {
+        return;
+    }
+    matches = imgUrl.match(pattern)
+    if (!matches) {
+        alert('Wrong url');
+        this.insertPhereoEmbed();
+    }
+
+    var phereoEmbed;
+    if (!this.bRichTextEnabled) {
+        phereoEmbed = '[phereo width=500 height=250]' + matches[2] + '[/phereo]';
+    } else {
+        phereoEmbed = '<iframe rel="phereo" src="http://phereo.com/e/embed/' + matches[2] + '/anaglyph/" width="500" height="250" frameborder="0"></iframe>';
+    }
+    this.insertText(phereoEmbed);
 }
 
 smc_Editor.prototype.getSelect = function(bWantText, bWantHTMLText)

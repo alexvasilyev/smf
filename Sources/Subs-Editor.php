@@ -114,7 +114,7 @@ function bbc_to_html($text)
 	}
 
 	// What tags do we allow?
-	$allowed_tags = array('b', 'u', 'i', 's', 'hr', 'list', 'li', 'font', 'size', 'color', 'img', 'left', 'center', 'right', 'url', 'email', 'ftp', 'sub', 'sup');
+	$allowed_tags = array('b', 'u', 'i', 's', 'hr', 'list', 'li', 'font', 'size', 'color', 'img', 'left', 'center', 'right', 'url', 'email', 'ftp', 'sub', 'sup', 'phereo');
 
 	$text = parse_bbc($text, true, '', $allowed_tags);
 
@@ -805,6 +805,8 @@ function html_to_bbc($text)
 		'~</blockquote>~i' => "&lt;/blockquote&gt;",
 		'~<ins(\s(.)*?)*?' . '>~i' => "&lt;ins&gt;",
 		'~</ins>~i' => "&lt;/ins&gt;",
+                '~<iframe (rel="phereo")? src="https?:\/\/phereo\.com\/e\/embed\/([a-z0-9]{24,24})\/([a-z]+\/)?" width="([0-9]{2,4})" height="([0-9]{2,4})"[^>]*>~i' => '[phereo width=$4 height=$5]$2',
+                '~</iframe>~i' => '[/phereo]',
 	);
 	$text = preg_replace(array_keys($tags), array_values($tags), $text);
 
@@ -1443,7 +1445,8 @@ function create_control_richedit($editorOptions)
 				prompt_text_email: \'' . addcslashes($txt['prompt_text_email'], "'") . '\',
 				prompt_text_ftp: \'' . addcslashes($txt['prompt_text_ftp'], "'") . '\',
 				prompt_text_url: \'' . addcslashes($txt['prompt_text_url'], "'") . '\',
-				prompt_text_img: \'' . addcslashes($txt['prompt_text_img'], "'") . '\'
+				prompt_text_img: \'' . addcslashes($txt['prompt_text_img'], "'") . '\',
+				prompt_text_phereo: \'' . addcslashes($txt['prompt_text_phereo'], "'") . '\'
 			}
 		// ]]></script>
 		<script type="text/javascript" src="' . $settings['default_theme_url'] . '/scripts/editor.js?fin20"></script>';

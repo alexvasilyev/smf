@@ -689,6 +689,9 @@ smc_Editor.prototype.handleButtonClick = function (oButtonProperties)
         // Is it Phereo embed?
         else if ('phereo' == oButtonProperties.sCode) {
             this.insertPhereoEmbed();
+        } else if ('phereo_upload' == oButtonProperties.sCode) {
+            phereoUploadDiv = document.getElementById('phereo_upload_div');
+            phereoUploadDiv.style.display = 'block';
         }
 	else
 	{
@@ -860,21 +863,41 @@ smc_Editor.prototype.insertPhereoEmbed = function()
 {
     var imgUrl, matches;
     var pattern = /^(https?:\/\/)?phereo.com\/image\/([a-z0-9]{24,24})\/?$/i;
+    var pattern_embed = /^<iframe[ ]{1,2}src="https?:\/\/phereo.com\/e\/embed\/([a-z0-9]{24,24})\/[a-z\.]+\/" width="([0-9]{2,4})" height="([0-9]{2,4})".+$/i
     imgUrl = prompt(oEditorStrings['prompt_text_phereo'], '');
     if (!imgUrl) {
         return;
     }
-    matches = imgUrl.match(pattern)
-    if (!matches) {
-        alert('Wrong url');
-        this.insertPhereoEmbed();
-    }
 
+    matches = imgUrl.match(pattern);
+    if (matches) {
+        image_id = matches[2];
+        this.insertPhereoText(image_id);
+
+        return;
+    }
+    matches = imgUrl.match(pattern_embed);
+    if (matches) {
+        image_id = matches[1];
+        width = matches[2];
+        height = matches[3];
+        this.insertPhereoText(image_id, width, height);
+
+        return;
+    }
+    alert('Wrong url');
+    this.insertPhereoEmbed();
+}
+
+smc_Editor.prototype.insertPhereoText = function(image_id, width, height)
+{
+    width = width || 500;
+    height = height || 250;
     var phereoEmbed;
     if (!this.bRichTextEnabled) {
-        phereoEmbed = '[phereo width=500 height=250]' + matches[2] + '[/phereo]';
+        phereoEmbed = '[phereo width=' + width + ' height=' + height + ']' + image_id + '[/phereo]';
     } else {
-        phereoEmbed = '<iframe rel="phereo" src="http://phereo.com/e/embed/' + matches[2] + '/anaglyph/" width="500" height="250" frameborder="0"></iframe>';
+        phereoEmbed = '<iframe rel="phereo" src="http://phereo.com/e/embed/' + image_id + '/anaglyph/" width="' + width + '" height="' + height + '" frameborder="0"></iframe>';
     }
     this.insertText(phereoEmbed);
 }

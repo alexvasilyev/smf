@@ -8,3 +8,6 @@ if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF')) {
 }
 
 remove_integration_function('integrate_pre_include', '$sourcedir/Subs-Phereo.php', true);
+
+$uploaddir = $settings['theme_dir'] . '/phereo_upload';
+rmdir($uploaddir);

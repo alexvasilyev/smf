@@ -199,6 +199,7 @@ function AdminMain()
 						// Mod Authors for a "ADD AFTER" on this line. Ensure you end your change with a comma. For example:
 						// 'shout' => array($txt['shout']),
 						// Note the comma!! The setting with automatically appear with the first mod to be added.
+                                            'phereo' => array($txt['mods_cat_modifications_phereo']),
 					),
 				),
 			),

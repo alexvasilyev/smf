@@ -400,6 +400,10 @@ function template_main()
 		echo '
 					<div id="smileyBox_message"></div>';
 
+        if ($modSettings['phereo_allow_upload']) {
+            echo phereo_upload_section();
+        }
+
 	echo '
 					', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message');
 
